@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Simulateur Zenride</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <meta http-equiv="refresh" content="10" /> -->
+  </head>
+  <body>
+    <main class="bg-blue-100 p-1 grid gap-5 grid-cols-3">
+      <section class="border p-4 border-black flex flex-col gap-2.5">
+        <p class="font-bold text-2xl">PARAMETRAGES</p>
+        <div class="flex gap-5">
+          <label for="prix_velo">
+            Prix TTC du vélo et accessoires optionnels
+          </label>
+          <input type="number" name="prix_velo" id="prix_velo" />
+        </div>
+        <div class="flex gap-5">
+          <label for="salaire_brut">Salaire brut mensuel</label>
+          <input type="number" name="salaire_brut" id="salaire_brut" />
+        </div>
+        <div class="flex gap-5">
+          <label for="aide_employeur">Aide de l'employeur</label>
+          <input type="number" name="aide_employeur" id="aide_employeur" />
+        </div>
+        <div class="flex gap-5">
+          <label for="avec_aide_employeur">Avec aide de l'employeur</label>
+          <input
+            type="checkbox"
+            name="avec_aide_employeur"
+            id="avec_aide_employeur"
+          />
+        </div>
+        <div class="flex gap-5">
+          <label for="imposition_revenus">
+            Taux d'imposition sur le revenus
+          </label>
+          <input
+            type="number"
+            name="imposition_revenus"
+            id="imposition_revenus"
+          />
+        </div>
+        <div class="flex gap-5">
+          <label for="taux_cotisations_patronales">
+            Taux de cotisations patronales
+          </label>
+          <input
+            type="number"
+            name="taux_cotisations_patronales"
+            id="taux_cotisations_patronales"
+          />
+        </div>
+        <div class="flex gap-5">
+          <label for="taux_cotisations_salariales">
+            Taux de cotisations salariales
+          </label>
+          <input
+            type="number"
+            name="taux_cotisations_salariales"
+            id="taux_cotisations_salariales"
+          />
+        </div>
+      </section>
+
+      <section class="border p-4 border-black flex flex-col gap-2.5">
+        <p class="font-bold text-2xl">DETAILS</p>
+        <div class="grid gap-4">
+          <div>
+            <p class="font-bold">Salaire brut initial</p>
+            <div>
+              <div class="flex gap-5">
+                <label for="salaire_brut_initial_velo">Avec vélo</label>
+                <input
+                  type="number"
+                  name="salaire_brut_initial_velo"
+                  id="salaire_brut_initial_velo"
+                />
+              </div>
+              <div class="flex gap-5">
+                <label for="salaire_brut_initial">Sans vélo</label>
+                <input
+                  type="number"
+                  name="salaire_brut_initial"
+                  id="salaire_brut_initial"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="font-bold">Loyer total brut</p>
+            <div>
+              <div class="flex gap-5">
+                <label for="loyer_total_brut_velo">Avec vélo</label>
+                <input
+                  type="number"
+                  name="loyer_total_brut_velo"
+                  id="loyer_total_brut_velo"
+                />
+              </div>
+              <div class="flex gap-5">
+                <label for="loyer_total_brut">Sans vélo</label>
+                <input
+                  type="text"
+                  name="loyer_total_brut"
+                  id="loyer_total_brut"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="font-bold">FMD ou participation employeur</p>
+            <div>
+              <div class="flex gap-5">
+                <label for="fmd_velo">Avec vélo</label>
+                <input type="number" name="fmd_velo" id="fmd_velo" />
+              </div>
+              <div class="flex gap-5">
+                <label for="fmd">Sans vélo</label>
+                <input type="text" name="fmd" id="fmd" />
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="font-bold">
+              Loyer minoré via FMD ou participation employeur
+            </p>
+            <div>
+              <div class="flex gap-5">
+                <label for="loyer_minore_velo">Avec vélo</label>
+                <input
+                  type="number"
+                  name="loyer_minore_velo"
+                  id="loyer_minore_velo"
+                />
+              </div>
+              <div class="flex gap-5">
+                <label for="loyer_minore">Sans vélo</label>
+                <input type="text" name="loyer_minore" id="loyer_minore" />
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="font-bold">Compensation économies charges patronales</p>
+            <div>
+              <div class="flex gap-5">
+                <label for="compensation_eco_velo">Avec vélo</label>
+                <input
+                  type="number"
+                  name="compensation_eco_velo"
+                  id="compensation_eco_velo"
+                />
+              </div>
+              <div class="flex gap-5">
+                <label for="compensation_eco">Sans vélo</label>
+                <input
+                  type="text"
+                  name="compensation_eco"
+                  id="compensation_eco"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="font-bold">Loyer à déduire (conversion de salaire)</p>
+            <div>
+              <div class="flex gap-5">
+                <label for="loyer_a_deduire_velo">Avec vélo</label>
+                <input
+                  type="number"
+                  name="loyer_a_deduire_velo"
+                  id="loyer_a_deduire_velo"
+                />
+              </div>
+              <div class="flex gap-5">
+                <label for="loyer_a_deduire">Sans vélo</label>
+                <input
+                  type="text"
+                  name="loyer_a_deduire"
+                  id="loyer_a_deduire"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="font-bold">Nouveau salaire brut</p>
+            <div>
+              <div class="flex gap-5">
+                <label for="nouveau_salaire_brut_velo">Avec vélo</label>
+                <input
+                  type="number"
+                  name="nouveau_salaire_brut_velo"
+                  id="nouveau_salaire_brut_velo"
+                />
+              </div>
+              <div class="flex gap-5">
+                <label for="nouveau_salaire_brut">Sans vélo</label>
+                <input
+                  type="number"
+                  name="nouveau_salaire_brut"
+                  id="nouveau_salaire_brut"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="font-bold">Cotisations salariales</p>
+            <div>
+              <div class="flex gap-5">
+                <label for="cotisations_salariales_velo">Avec vélo</label>
+                <input
+                  type="number"
+                  name="cotisations_salariales_velo"
+                  id="cotisations_salariales_velo"
+                />
+              </div>
+              <div class="flex gap-5">
+                <label for="cotisations_salariales">Sans vélo</label>
+                <input
+                  type="number"
+                  name="cotisations_salariales"
+                  id="cotisations_salariales"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="font-bold">Salaire net</p>
+            <div>
+              <div class="flex gap-5">
+                <label for="salaire_net_velo">Avec vélo</label>
+                <input
+                  type="number"
+                  name="salaire_net_velo"
+                  id="salaire_net_velo"
+                />
+              </div>
+              <div class="flex gap-5">
+                <label for="salaire_net">Sans vélo</label>
+                <input type="number" name="salaire_net" id="salaire_net" />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="font-bold">impots sur le revenu</p>
+            <div>
+              <div class="flex gap-5">
+                <label for="impots_sur_revenu_velo">Avec vélo</label>
+                <input
+                  type="number"
+                  name="impots_sur_revenu_velo"
+                  id="impots_sur_revenu_velo"
+                />
+              </div>
+              <div class="flex gap-5">
+                <label for="impots_sur_revenu">Sans vélo</label>
+                <input
+                  type="number"
+                  name="impots_sur_revenu"
+                  id="impots_sur_revenu"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="font-bold">Salaire net après impots</p>
+            <div>
+              <div class="flex gap-5">
+                <label for="salaire_net_apres_impots_velo">Avec vélo</label>
+                <input
+                  type="number"
+                  name="salaire_net_apres_impots_velo"
+                  id="salaire_net_apres_impots_velo"
+                />
+              </div>
+              <div class="flex gap-5">
+                <label for="salaire_net_apres_impots">Sans vélo</label>
+                <input
+                  type="number"
+                  name="salaire_net_apres_impots"
+                  id="salaire_net_apres_impots"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-5">
+            <label for="cout_mensuel_location">
+              Coût mensuel de la location
+            </label>
+            <input
+              type="number"
+              name="cout_mensuel_location"
+              id="cout_mensuel_location"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="border p-4 border-black flex flex-col gap-2.5">
+        <p class="font-bold text-2xl">ECONOMIE</p>
+        <div class="flex flex-col gap-4">
+          <div>
+            <p class="font-bold">Vélo et accessoires</p>
+            <div>
+              <div class="flex gap-5">
+                <label for="velo_accessoires_location">Location</label>
+                <input
+                  type="number"
+                  name="velo_accessoires_location"
+                  id="velo_accessoires_location"
+                />
+              </div>
+              <div class="flex gap-5">
+                <label for="velo_accessoires_achat">Achat</label>
+                <input
+                  type="number"
+                  name="velo_accessoires_achat"
+                  id="velo_accessoires_achat"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="font-bold">Couts des services</p>
+            <div>
+              <div class="flex gap-5">
+                <label for="couts_services_location">Location</label>
+                <input
+                  type="text"
+                  name="couts_services_location"
+                  id="couts_services_location"
+                />
+              </div>
+              <div class="flex gap-5">
+                <label for="couts_services_achat">Achat</label>
+                <input
+                  type="number"
+                  name="couts_services_achat"
+                  id="couts_services_achat"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="font-bold">OFFRES DE RACHAT APRES 36 MOIS</p>
+            <div>
+              <div class="flex gap-5">
+                <label for="offre_rachat_location">Location</label>
+                <input
+                  type="number"
+                  name="offre_rachat_location"
+                  id="offre_rachat_location"
+                />
+              </div>
+              <div class="flex gap-5">
+                <label for="offre_rachat_achat">Achat</label>
+                <input
+                  type="text"
+                  name="offre_rachat_achat"
+                  id="offre_rachat_achat"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="font-bold">
+              Coûts totaux du vélo (services et option d'achat inclus)
+            </p>
+            <div>
+              <div class="flex gap-5">
+                <label for="cout_total_velo_location">Location</label>
+                <input
+                  type="number"
+                  name="cout_total_velo_location"
+                  id="cout_total_velo_location"
+                />
+              </div>
+              <div class="flex gap-5">
+                <label for="cout_total_velo_achat">Achat</label>
+                <input
+                  type="text"
+                  name="cout_total_velo_achat"
+                  id="cout_total_velo_achat"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-5">
+            <label for="economie_totale">Economie totale</label>
+            <input type="number" name="economie_totale" id="economie_totale" />
+          </div>
+
+          <div class="flex gap-5">
+            <label for="economie_totale_pourcentage"
+              >Economie en pourcentage</label
+            >
+            <input
+              type="number"
+              name="economie_totale_pourcentage"
+              id="economie_totale_pourcentage"
+            />
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+  <script type="text/javascript">
+    // UTILS
+    const getElement = (id) => document.getElementById(id);
+
+    // VALEURS FIXES
+    const CONSTANTS = {
+      DUREE_CONTRAT: 36,
+      LOYER_TOTAL_TTC: 104.11,
+      COEFF_FINANCEMENT: 3.28,
+      LOYEURS_REVISIONS_TTC: 5,
+      LOYER_SERVICES_TTC: 22.11,
+      VALEUR_RESIDUELLE_BAILLEUR: 15,
+      PROPOSITION_RACHAT_EQUIPEMENTS: 12,
+      LOYER_LOCATION_EQUIPEMENTS_TTC: 82,
+      LOYER_SUPPORT_VELOTAFFEURS_TTC: 3.5,
+      LOYER_ASSURANCE_VOL_CASSE_ASSISTANCE_TTC: 13.61,
+    };
+
+    // VALEURS VARIABLES
+    const parameters = {
+      prix_velo: getElement("prix_velo"),
+      salaire_brut: getElement("salaire_brut"),
+      aide_employeur: getElement("aide_employeur"),
+      avec_aide_employeur: getElement("avec_aide_employeur"),
+      taux_imposition_revenus: getElement("imposition_revenus"),
+      taux_cotisations_patronales: getElement("taux_cotisations_patronales"),
+      taux_cotisations_salariales: getElement("taux_cotisations_salariales"),
+    };
+
+    // RESULTATS
+    let results = {
+      cout_mensuel_location: getElement("cout_mensuel_location"),
+      economie_totale: getElement("economie_totale"),
+      economie_totale_pourcentage: getElement("economie_totale_pourcentage"),
+
+      salaire_brut_initial: {
+        avec_velo: getElement("salaire_brut_initial_velo"),
+        sans_velo: getElement("salaire_brut_initial"),
+      },
+      loyer_total_brut: {
+        avec_velo: getElement("loyer_total_brut_velo"),
+        sans_velo: getElement("loyer_total_brut"),
+      },
+      fmd: {
+        avec_velo: getElement("fmd_velo"),
+        sans_velo: getElement("fmd"),
+      },
+      loyer_minore: {
+        avec_velo: getElement("loyer_minore_velo"),
+        sans_velo: getElement("loyer_minore"),
+      },
+      compensation_eco: {
+        avec_velo: getElement("compensation_eco_velo"),
+        sans_velo: getElement("compensation_eco"),
+      },
+      loyer_a_deduire: {
+        avec_velo: getElement("loyer_a_deduire_velo"),
+        sans_velo: getElement("loyer_a_deduire"),
+      },
+      nouveau_salaire_brut: {
+        avec_velo: getElement("nouveau_salaire_brut_velo"),
+        sans_velo: getElement("nouveau_salaire_brut"),
+      },
+      cotisations_salariales: {
+        avec_velo: getElement("cotisations_salariales_velo"),
+        sans_velo: getElement("cotisations_salariales"),
+      },
+      salaire_net: {
+        avec_velo: getElement("salaire_net_velo"),
+        sans_velo: getElement("salaire_net"),
+      },
+      impots_sur_revenu: {
+        avec_velo: getElement("impots_sur_revenu_velo"),
+        sans_velo: getElement("impots_sur_revenu"),
+      },
+      salaire_net_apres_impots: {
+        avec_velo: getElement("salaire_net_apres_impots_velo"),
+        sans_velo: getElement("salaire_net_apres_impots"),
+      },
+      velo_accessoires: {
+        location: getElement("velo_accessoires_location"),
+        achat: getElement("velo_accessoires_achat"),
+      },
+      couts_services: {
+        location: getElement("couts_services_location"),
+        achat: getElement("couts_services_achat"),
+      },
+      offre_rachat: {
+        location: getElement("offre_rachat_location"),
+        achat: getElement("offre_rachat_achat"),
+      },
+      cout_total_velo: {
+        location: getElement("cout_total_velo_location"),
+        achat: getElement("cout_total_velo_achat"),
+      },
+    };
+
+    function calculateChange() {
+      const modes = ["avec_velo", "sans_velo"];
+      const avecAideEmployeur = parameters.avec_aide_employeur.checked;
+
+      // SALAIRE BRUT INITIAL
+      modes.forEach(
+        (m) =>
+          (results.salaire_brut_initial[m].value =
+            parameters.salaire_brut.value)
+      );
+
+      // LOYER TOTAL BRUT
+      results.loyer_total_brut.sans_velo.value = "-";
+      results.loyer_total_brut.avec_velo.value = Math.ceil(
+        0 - CONSTANTS.LOYER_TOTAL_TTC
+      );
+
+      // FMD
+      results.fmd.sans_velo.value = "-";
+
+      if (avecAideEmployeur && parameters.aide_employeur?.value) {
+        results.fmd.avec_velo.value = parameters.aide_employeur.value;
+      } else {
+        results.fmd.avec_velo.value = undefined;
+      }
+
+      // LOYER MINORE
+      results.loyer_minore.sans_velo.value = "-";
+
+      if (
+        results.loyer_total_brut.avec_velo?.value &&
+        results.fmd.avec_velo?.value
+      ) {
+        results.loyer_minore.avec_velo.value = Math.ceil(
+          Number(results.loyer_total_brut.avec_velo.value) +
+            Number(results.fmd.avec_velo.value)
+        );
+      } else {
+        results.loyer_minore.avec_velo.value = undefined;
+      }
+
+      // COMPENSATION ECO CHARGES PATRONALES
+      results.compensation_eco.sans_velo.value = "-";
+
+      if (
+        parameters.taux_cotisations_patronales?.value &&
+        results.loyer_minore.avec_velo?.value
+      ) {
+        results.compensation_eco.avec_velo.value = Math.ceil(
+          -Number(results.loyer_minore.avec_velo.value) +
+            Number(results.loyer_minore.avec_velo.value) /
+              (1 + Number(parameters.taux_cotisations_patronales.value / 100))
+        );
+      } else {
+        results.compensation_eco.avec_velo.value = undefined;
+      }
+
+      // LOYER A DEDUIRE
+      results.loyer_a_deduire.sans_velo.value = "-";
+
+      results.loyer_a_deduire.avec_velo.value = Math.ceil(
+        Number(results.loyer_minore.avec_velo.value) +
+          Number(results.compensation_eco.avec_velo.value)
+      );
+
+      // NOUVEAU SALAIRE BRUT
+      results.nouveau_salaire_brut.sans_velo.value =
+        results.salaire_brut_initial.sans_velo.value;
+
+      results.nouveau_salaire_brut.avec_velo.value = Math.ceil(
+        Number(results.salaire_brut_initial.avec_velo.value) +
+          Number(results.loyer_a_deduire.avec_velo.value)
+      );
+
+      modes.forEach((m) => {
+        // COTISATIONS SALARIALES
+        results.cotisations_salariales[m].value = -Math.ceil(
+          Number(results.nouveau_salaire_brut[m].value) *
+            Number(parameters.taux_cotisations_salariales.value / 100)
+        );
+
+        // SALAIRE NET
+        results.salaire_net[m].value = Math.ceil(
+          Number(results.nouveau_salaire_brut[m].value) +
+            Number(results.cotisations_salariales[m].value)
+        );
+
+        // IMPOTS SUR REVENU
+        results.impots_sur_revenu[m].value = -Math.ceil(
+          Number(results.salaire_net[m].value) *
+            Number(parameters.taux_imposition_revenus.value / 100)
+        );
+
+        // SALAIRE NET APRES IMPOTS
+        results.salaire_net_apres_impots[m].value = Math.ceil(
+          Number(results.salaire_net[m].value) +
+            Number(results.impots_sur_revenu[m].value)
+        );
+      });
+
+      // COUT MENSUEL LOCATION
+      results.cout_mensuel_location.value = Math.ceil(
+        Number(results.salaire_net_apres_impots.sans_velo.value) -
+          Number(results.salaire_net_apres_impots.avec_velo.value)
+      );
+
+      // VELO & ACCESSOIRES
+      results.velo_accessoires.location.value = Math.ceil(
+        Number(results.cout_mensuel_location.value) * CONSTANTS.DUREE_CONTRAT
+      );
+
+      results.velo_accessoires.achat.value = parameters.prix_velo.value;
+
+      // COUT SERVICES
+      results.couts_services.location.value = "Inclus";
+      results.couts_services.achat.value = Math.ceil(
+        CONSTANTS.LOYER_SERVICES_TTC * CONSTANTS.DUREE_CONTRAT
+      );
+
+      // OFFRE DE RACHAT
+      results.offre_rachat.achat.value = "-";
+      results.offre_rachat.location.value = Math.ceil(
+        Number(parameters.prix_velo.value) *
+          Number(CONSTANTS.PROPOSITION_RACHAT_EQUIPEMENTS / 100)
+      );
+
+      // COUT TOTAUX DU VELO
+      results.cout_total_velo.location.value = Math.ceil(
+        Number(results.offre_rachat.location.value) +
+          Number(results.velo_accessoires.location.value)
+      );
+
+      results.cout_total_velo.achat.value = Math.ceil(
+        Number(results.couts_services.achat.value) +
+          Number(results.velo_accessoires.achat.value)
+      );
+
+      // ECONOMIE TOTAL
+      results.economie_totale.value =
+        Number(results.cout_total_velo.achat.value) -
+        Number(results.cout_total_velo.location.value);
+
+      results.economie_totale_pourcentage.value = Math.ceil(
+        (results.economie_totale.value /
+          Number(results.cout_total_velo.achat.value)) *
+          100
+      );
+    }
+
+    window.addEventListener("load", () => {
+      parameters.prix_velo.value = 2500;
+      parameters.salaire_brut.value = 3500;
+      parameters.aide_employeur.value = 55;
+      parameters.taux_imposition_revenus.value = 2;
+      parameters.taux_cotisations_patronales.value = 45;
+      parameters.taux_cotisations_salariales.value = 20;
+      parameters.avec_aide_employeur.checked = true;
+      calculateChange();
+    });
+
+    Object.values(parameters).forEach((el) =>
+      el.addEventListener("input", calculateChange)
+    );
+  </script>
+</html>
