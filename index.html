@@ -23,6 +23,14 @@
           <label for="aide_employeur">Aide de l'employeur</label>
           <input type="number" name="aide_employeur" id="aide_employeur" />
         </div>
+        <div class="hidden">
+          <label for="aide_employeur_save">Aide de l'employeur</label>
+          <input
+            type="number"
+            name="aide_employeur_save"
+            id="aide_employeur_save"
+          />
+        </div>
         <div class="flex gap-5">
           <label for="avec_aide_employeur">Avec aide de l'employeur</label>
           <input
@@ -436,6 +444,7 @@
       prix_velo: getElement("prix_velo"),
       salaire_brut: getElement("salaire_brut"),
       aide_employeur: getElement("aide_employeur"),
+      aide_employeur_save: getElement("aide_employeur_save"),
       avec_aide_employeur: getElement("avec_aide_employeur"),
       taux_imposition_revenus: getElement("imposition_revenus"),
       taux_cotisations_patronales: getElement("taux_cotisations_patronales"),
@@ -527,14 +536,20 @@
         0 - CONSTANTS.LOYER_TOTAL_TTC
       );
 
+      if (Number(parameters.aide_employeur.value) > 0) {
+        parameters.aide_employeur_save.value = parameters.aide_employeur.value;
+      }
+
+      parameters.aide_employeur.value = avecAideEmployeur
+        ? Number(parameters.aide_employeur_save.value) > 0
+          ? parameters.aide_employeur_save.value
+          : parameters.aide_employeur.value
+        : 0;
+
       // FMD
       results.fmd.sans_velo.value = "-";
 
-      if (avecAideEmployeur && parameters.aide_employeur?.value) {
-        results.fmd.avec_velo.value = parameters.aide_employeur.value;
-      } else {
-        results.fmd.avec_velo.value = undefined;
-      }
+      results.fmd.avec_velo.value = parameters.aide_employeur.value;
 
       // LOYER MINORE
       results.loyer_minore.sans_velo.value = "-";
