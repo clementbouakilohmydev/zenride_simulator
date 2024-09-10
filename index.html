@@ -297,17 +297,6 @@
               </div>
             </div>
           </div>
-
-          <div class="flex gap-5">
-            <label for="cout_mensuel_location">
-              Coût mensuel de la location
-            </label>
-            <input
-              type="number"
-              name="cout_mensuel_location"
-              id="cout_mensuel_location"
-            />
-          </div>
         </div>
       </section>
 
@@ -415,6 +404,17 @@
               type="number"
               name="economie_totale_pourcentage"
               id="economie_totale_pourcentage"
+            />
+          </div>
+
+          <div class="flex gap-5">
+            <label for="cout_mensuel_location">
+              Coût mensuel de la location
+            </label>
+            <input
+              type="number"
+              name="cout_mensuel_location"
+              id="cout_mensuel_location"
             />
           </div>
         </div>
@@ -626,10 +626,13 @@
       });
 
       // COUT MENSUEL LOCATION
-      results.cout_mensuel_location.value = Math.ceil(
+      const coutMensuelLocation = Math.ceil(
         Number(results.salaire_net_apres_impots.sans_velo.value) -
           Number(results.salaire_net_apres_impots.avec_velo.value)
       );
+
+      results.cout_mensuel_location.value =
+        coutMensuelLocation <= 0 ? 0 : coutMensuelLocation;
 
       // VELO & ACCESSOIRES
       results.velo_accessoires.location.value = Math.ceil(
@@ -674,10 +677,11 @@
       );
     }
 
+    // INITIALISATION DES VALEURS AU CHARGEMENT
     window.addEventListener("load", () => {
       parameters.prix_velo.value = 2500;
       parameters.salaire_brut.value = 3500;
-      parameters.aide_employeur.value = 55;
+      parameters.aide_employeur.value = 0;
       parameters.taux_imposition_revenus.value = 2;
       parameters.taux_cotisations_patronales.value = 45;
       parameters.taux_cotisations_salariales.value = 20;
@@ -685,6 +689,7 @@
       calculateChange();
     });
 
+    // LANCER LE CALCUL AUX CHANGEMENTS DES INPUTS PARAMETRES CLIENT
     Object.values(parameters).forEach((el) =>
       el.addEventListener("input", calculateChange)
     );
