@@ -425,20 +425,6 @@
     // UTILS
     const getElement = (id) => document.getElementById(id);
 
-    // VALEURS FIXES
-    const CONSTANTS = {
-      DUREE_CONTRAT: 36,
-      LOYER_TOTAL_TTC: 104.11,
-      COEFF_FINANCEMENT: 3.28,
-      LOYEURS_REVISIONS_TTC: 5,
-      LOYER_SERVICES_TTC: 22.11,
-      VALEUR_RESIDUELLE_BAILLEUR: 15,
-      PROPOSITION_RACHAT_EQUIPEMENTS: 12,
-      LOYER_LOCATION_EQUIPEMENTS_TTC: 82,
-      LOYER_SUPPORT_VELOTAFFEURS_TTC: 3.5,
-      LOYER_ASSURANCE_VOL_CASSE_ASSISTANCE_TTC: 13.61,
-    };
-
     // VALEURS VARIABLES
     const parameters = {
       prix_velo: getElement("prix_velo"),
@@ -449,6 +435,16 @@
       taux_imposition_revenus: getElement("imposition_revenus"),
       taux_cotisations_patronales: getElement("taux_cotisations_patronales"),
       taux_cotisations_salariales: getElement("taux_cotisations_salariales"),
+    };
+
+    // VALEURS FIXES
+    const CONSTANTS = {
+      DUREE_CONTRAT: 36,
+      COEFF_FINANCEMENT: 3.28,
+      LOYEURS_REVISIONS_TTC: 5,
+      VALEUR_RESIDUELLE_BAILLEUR: 15,
+      PROPOSITION_RACHAT_EQUIPEMENTS: 12,
+      LOYER_SUPPORT_VELOTAFFEURS_TTC: 3.5,
     };
 
     // RESULTATS
@@ -523,6 +519,30 @@
       const modes = ["avec_velo", "sans_velo"];
       const avecAideEmployeur = parameters.avec_aide_employeur.checked;
 
+      const LOYER_LOCATION_EQUIPEMENTS_TTC = Number(
+        (
+          (Number(parameters.prix_velo.value || 0) *
+            CONSTANTS.COEFF_FINANCEMENT) /
+          100
+        ).toFixed(2)
+      );
+
+      const LOYER_ASSURANCE_VOL_CASSE_ASSISTANCE_TTC = Number(
+        (
+          (0.55 / 100) *
+          ((LOYER_LOCATION_EQUIPEMENTS_TTC / 1.2) * CONSTANTS.DUREE_CONTRAT +
+            CONSTANTS.VALEUR_RESIDUELLE_BAILLEUR)
+        ).toFixed(2)
+      );
+
+      const LOYER_SERVICES_TTC =
+        LOYER_ASSURANCE_VOL_CASSE_ASSISTANCE_TTC +
+        CONSTANTS.LOYER_SUPPORT_VELOTAFFEURS_TTC +
+        CONSTANTS.LOYEURS_REVISIONS_TTC;
+
+      const LOYER_TOTAL_TTC =
+        LOYER_LOCATION_EQUIPEMENTS_TTC + LOYER_SERVICES_TTC;
+
       // SALAIRE BRUT INITIAL
       modes.forEach(
         (m) =>
@@ -532,9 +552,7 @@
 
       // LOYER TOTAL BRUT
       results.loyer_total_brut.sans_velo.value = "-";
-      results.loyer_total_brut.avec_velo.value = Math.ceil(
-        0 - CONSTANTS.LOYER_TOTAL_TTC
-      );
+      results.loyer_total_brut.avec_velo.value = -Math.ceil(LOYER_TOTAL_TTC);
 
       if (Number(parameters.aide_employeur.value) > 0) {
         parameters.aide_employeur_save.value = parameters.aide_employeur.value;
@@ -573,7 +591,7 @@
         parameters.taux_cotisations_patronales?.value &&
         results.loyer_minore.avec_velo?.value
       ) {
-        results.compensation_eco.avec_velo.value = Math.ceil(
+        results.compensation_eco.avec_velo.value = Math.floor(
           -Number(results.loyer_minore.avec_velo.value) +
             Number(results.loyer_minore.avec_velo.value) /
               (1 + Number(parameters.taux_cotisations_patronales.value / 100))
@@ -601,7 +619,7 @@
 
       modes.forEach((m) => {
         // COTISATIONS SALARIALES
-        results.cotisations_salariales[m].value = -Math.ceil(
+        results.cotisations_salariales[m].value = -Math.floor(
           Number(results.nouveau_salaire_brut[m].value) *
             Number(parameters.taux_cotisations_salariales.value / 100)
         );
@@ -635,7 +653,7 @@
         coutMensuelLocation <= 0 ? 0 : coutMensuelLocation;
 
       // VELO & ACCESSOIRES
-      results.velo_accessoires.location.value = Math.ceil(
+      results.velo_accessoires.location.value = Math.floor(
         Number(results.cout_mensuel_location.value) * CONSTANTS.DUREE_CONTRAT
       );
 
@@ -644,7 +662,7 @@
       // COUT SERVICES
       results.couts_services.location.value = "Inclus";
       results.couts_services.achat.value = Math.ceil(
-        CONSTANTS.LOYER_SERVICES_TTC * CONSTANTS.DUREE_CONTRAT
+        LOYER_SERVICES_TTC * CONSTANTS.DUREE_CONTRAT
       );
 
       // OFFRE DE RACHAT
@@ -679,9 +697,9 @@
 
     // INITIALISATION DES VALEURS AU CHARGEMENT
     window.addEventListener("load", () => {
-      parameters.prix_velo.value = 2500;
+      parameters.prix_velo.value = 1600;
       parameters.salaire_brut.value = 3500;
-      parameters.aide_employeur.value = 0;
+      parameters.aide_employeur.value = 55;
       parameters.taux_imposition_revenus.value = 2;
       parameters.taux_cotisations_patronales.value = 45;
       parameters.taux_cotisations_salariales.value = 20;
